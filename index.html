@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Сайт Движение Первых - информация об учениках и их кружках.">
+    <meta name="keywords" content="ученики, кружки, Движение Первых, школа 31, Белгород">
+    <title>Первичное отделение МБОУ СОШ №31 г. Белгород</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.7), rgba(0, 0, 255, 0.7)); /* Темный фон */
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #message {
+            display: none;
+            font-size: 24px;
+            color: #ff0000;
+            text-align: center;
+            position: fixed; /* Фиксированное положение */
+            top: 20%; /* От верхнего края */
+            left: 50%;
+            transform: translateX(-50%); /* Центрирование по горизонтали */
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Поверх других элементов */
+        }
+    </style>
+</head>
+<body>
+    <div id="message">Пожалуйста, поверните телефон в альбомную ориентацию!</div>
+
+    <div class="header">
+        <h2>Первичное отделение МБОУ СОШ №31 г. Белгород</h2>
+    </div>
+
+    <div class="main-container">
+        <div class="description">
+            <h3>На сайте представлены руководители школьных кружков и направлений. Узнайте, кто отвечает за медиа, волонтёрство, спорт, искусство и другие школьные проекты.</h3>
+        </div>
+
+        <div class="leader-container">
+            <div class="leader-card">
+                <img src="leader.jpg" alt="Фото главного человека" class="leader-photo-large">
+                <div class="leader-info">
+                    <h3>Наталья Зайцева</h3>
+                    <p>Председатель школьного ученического самоуправления.</p>
+                    <p>Наталья отвечает за координацию работы ученического самоуправления, организует школьные мероприятия и представляет интересы учащихся. Её задача — помогать ученикам участвовать в школьной жизни, развивать лидерские качества и укреплять школьное сообщество.</p>
+                    <p>Кабинет 303 11 'A'</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="students-container">
+            <div class="student-card" onclick="openMenu('student1')">
+                <img src="student1.jpg" alt="Фото ученика 1" class="student-photo">
+                <div class="student-info">
+                    <h3>Валерия Кривошапова, 10 "А"</h3>
+                    <p>Волонтёрство и добровольчество — "Благо твори!"</p>
+                </div>
+            </div>
+            <div class="student-card" onclick="openMenu('student2')">
+                <img src="student2.jpg" alt="Фото ученика 2" class="student-photo">
+                <div class="student-info">
+                    <h3>Екатерина Гусакова и Степан Коржов, 10 "А"</h3>
+                    <p>Медиа и коммуникации — "Расскажи о главном!</p>
+                </div>
+            </div>
+            <div class="student-card" onclick="openMenu('student3')">
+                <img src="student3.jpg" alt="Фото ученика 3" class="student-photo">
+                <div class="student-info">
+                    <h3>Екатерина Худякова, 9 "В"</h3>
+                    <p>Шефы для малышей — "Первый помощник"</p>
+                </div>
+            </div>
+            <div class="student-card" onclick="openMenu('student4')">
+                <img src="student4.jpg" alt="Фото ученика 4" class="student-photo">
+                <div class="student-info">
+                    <h3>Софья Гиммельфарб и Валерия Замула, 10 "А"</h3>
+                    <p>Культура и искусство — "Создавай и вдохновляй"</p>
+                </div>
+            </div>
+            <div class="student-card" onclick="openMenu('student5')">
+                <img src="student5.jpg" alt="Фото ученика 5" class="student-photo">
+                <div class="student-info">
+                    <h3>Белик Диана, 10 "А"</h3>
+                    <p>Здоровый образ жизни — "Будь здоров!"</p>
+                </div>
+            </div>
+            <div class="student-card" onclick="openMenu('student6')">
+                <img src="student6.jpg" alt="Фото ученика 6" class="student-photo">
+                <div class="student-info">
+                    <h3>Елизавета Момот, 9 "А"</h3>
+                    <p>Патриотизм и историческая память — "Служи Отечеству!"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>МБОУ СОШ №31 города Белгород</p>
+        <a href="https://school31bel.gosuslugi.ru/" target="_blank">Посетить сайт школы №31 г. Белгород</a>
+        <p>Сайт разработал Шаталов Роман</p>
+        <a href="https://t.me/Roman_ru31" target="_blank">Связаться со мной в Telegram</a>
+    </div>
+
+    <div id="student-menu" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeMenu()">&times;</span>
+            <img id="modal-photo" src="student1.jpg" alt="Фото ученика" class="modal-photo">
+            <div class="modal-info">
+                <h3 id="student-name">Имя ученика</h3>
+                <p id="student-details">Детали об ученике.</p>
+                <p id="student-location">Кабинет: </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function checkOrientation() {
+            const message = document.getElementById('message');
+            if (window.innerHeight > window.innerWidth) {
+                message.style.display = 'flex'; // Показать сообщение
+            } else {
+                message.style.display = 'none'; // Скрыть сообщение
+            }
+        }
+
+        // Проверка ориентации при загрузке страницы и изменении размера окна
+        window.addEventListener('load', checkOrientation);
+        window.addEventListener('resize', checkOrientation);
+    </script>
+</body>
+</html>
