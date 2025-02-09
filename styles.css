@@ -7,7 +7,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, rgba(255, 0, 0, 0.7), rgba(0, 0, 0, 0.6), rgba(0, 0, 255, 0.7));
+    background: linear-gradient(135deg, rgba(255, 0, 0, 1), rgba(0, 0, 0, 0.8), rgba(0, 0, 255, 1));
     color: #000;
     display: flex;
     flex-direction: column;
@@ -23,8 +23,9 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(255, 0, 0, 0.7), rgba(0, 0, 0, 0.6), rgba(0, 0, 255, 0.7));
+    background: linear-gradient(135deg, rgba(255, 0, 0, 1), rgba(0, 0, 0, 0.8), rgba(0, 0, 255, 1));
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -35,6 +36,28 @@ body {
     font-size: 24px;
     color: white;
     text-align: center;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    width: 80%;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    width: 0;
+    background-color: #ff6347;
+    animation: progressAnimation 2s linear forwards;
+}
+
+@keyframes progressAnimation {
+    to {
+        width: 100%;
+    }
 }
 
 @keyframes fadeOut {
@@ -62,25 +85,6 @@ body {
     to {
         opacity: 1;
     }
-}
-
-.news-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #ff6347;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.news-button:hover {
-    background-color: #ff4500;
 }
 
 .main-container {
@@ -142,6 +146,9 @@ body {
 .leader-info {
     flex: 1;
     text-align: justify;
+    word-wrap: break-word; /* Авто-перенос слов */
+    word-break: break-word; /* Разрыв слов, если они не помещаются */
+    line-height: 1.6; /* Межстрочный интервал для улучшения читаемости */
 }
 
 /* Стили для карточек студентов */
@@ -242,6 +249,30 @@ body {
 
 .modal-info {
     text-align: left;
+}
+
+/* Стили для кнопки новостей */
+.news-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff6347;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 1000;
+}
+
+.news-button:hover {
+    background-color: #ff4500;
 }
 
 /* Медиа-запросы для адаптивности */
