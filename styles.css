@@ -1,3 +1,4 @@
+/* Общие стили */
 * {
     margin: 0;
     padding: 0;
@@ -13,6 +14,34 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    overflow: hidden; /* Скрываем прокрутку при загрузке */
+}
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.7), rgba(0, 0, 0, 0.6), rgba(0, 0, 255, 0.7));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeOut 2s ease-in-out forwards;
+}
+
+.preloader-text {
+    font-size: 24px;
+    color: white;
+    text-align: center;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 
 .header {
@@ -21,33 +50,105 @@ body {
     width: 100%;
     border-radius: 10px;
     background-color: transparent;
+    color: white;
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.news-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #ff6347;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.news-button:hover {
+    background-color: #ff4500;
+}
 
 .main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    animation: slideIn 1s ease-in-out;
 }
 
-.description, .leader-container, .students-container, .footer {
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.description,
+.leader-container,
+.students-container,
+.footer {
     background-color: white;
     padding: 20px;
     margin: 10px 0;
     border-radius: 10px;
     width: 90%;
+    animation: slideIn 1s ease-in-out;
 }
 
-.leader-container, .students-container {
+/* Стили для карточек лидеров */
+.leader-container {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+.leader-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    width: 100%; /* Занимает всю ширину контейнера */
+    max-width: 600px; /* Ограничение максимальной ширины */
+}
+
+.leader-photo-large {
+    width: 200px;
+    height: 270px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 10px;
 }
 
 .leader-info {
+    flex: 1;
     text-align: justify;
-    margin-left: 20px;
+}
+
+/* Стили для карточек студентов */
+.students-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .student-card {
@@ -56,12 +157,18 @@ body {
     text-align: center;
     display: flex;
     flex-direction: row;
-    text-align: justify;;
+    text-align: justify;
     padding: 10px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 10px;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.student-card:hover {
+    transform: scale(1.05);
 }
 
 .student-photo {
@@ -76,11 +183,13 @@ body {
     text-align: left;
 }
 
+/* Стили для подвала */
 .footer {
     text-align: center;
     font-size: 18px;
 }
 
+/* Стили для модального окна */
 .modal {
     display: none;
     position: fixed;
@@ -101,6 +210,19 @@ body {
     width: 90%;
     max-width: 600px;
     display: flex;
+    position: relative; /* Добавлено для позиционирования кнопки закрытия */
+    animation: modalFadeIn 0.5s ease-in-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .close {
@@ -121,27 +243,55 @@ body {
 .modal-info {
     text-align: left;
 }
-.leader-card {
-    display: flex;
-    flex-direction: row; /* Для горизонтального размещения */
-    align-items: center;
-    justify-content: flex-start; /* Выравнивание элементов по левому краю */
-    margin-bottom: 20px;
-}
 
-.leader-photo-large {
-    width: 200px;
-    height: 270px;
-    object-fit: cover;
-    margin-right: 20px; /* Расстояние между фото и текстом */
-    border-radius: 10px;
-}
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+    .leader-card {
+        flex-direction: column; /* Изменяем направление на вертикальное */
+        align-items: center; /* Выравниваем элементы по центру */
+    }
 
-.leader-info {
-    flex: 1; /* Чтобы текст занимал оставшееся пространство */
-}
+    .leader-photo-large {
+        margin-right: 0; /* Убираем отступ справа */
+        margin-bottom: 10px; /* Добавляем отступ снизу */
+    }
 
-.header {
-    color: white;
-}
+    .student-card {
+        width: 100%; /* Занимает всю ширину контейнера */
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: auto; /* Автоматическая высота */
+    }
 
+    .student-photo {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .student-info {
+        text-align: center;
+    }
+
+    .modal-content {
+        flex-direction: column; /* Вертикальное размещение элементов */
+        align-items: center; /* Выравнивание по центру */
+    }
+
+    .modal-photo {
+        margin-right: 0; /* Убираем отступ справа */
+        margin-bottom: 10px; /* Добавляем отступ снизу */
+    }
+
+    .header {
+        padding: 20px; /* Уменьшаем отступ */
+    }
+
+    .description,
+    .leader-container,
+    .students-container,
+    .footer {
+        width: 95%; /* Занимают 95% ширины контейнера */
+        padding: 15px; /* Уменьшаем отступ */
+    }
+}
