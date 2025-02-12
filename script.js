@@ -14,9 +14,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Убираем прелоадер после полной загрузки страницы
     window.addEventListener('load', function() {
-        preloader.style.opacity = 0;
-        preloader.style.visibility = 'hidden';
-        document.body.style.overflow = 'auto'; // Включаем прокрутку
+        setTimeout(() => {
+            preloader.style.opacity = 0;
+            preloader.style.visibility = 'hidden';
+            document.body.style.overflow = 'auto'; // Включаем прокрутку
+        }, 8000); // Заставка на 8 секунд
     });
 
     // Анимация полосы загрузки
@@ -27,14 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (progress >= 100) {
             clearInterval(interval);
         }
-    }, 60); // 6 секунд для полной загрузки
-
-    // Скрытие прелоадера через 6 секунд
-    setTimeout(() => {
-        preloader.style.opacity = 0;
-        preloader.style.visibility = 'hidden';
-        document.body.style.overflow = 'auto'; // Включаем прокрутку
-    }, 6000);
+    }, 80); // 8 секунд для полной загрузки
 
     // Скрытие индикатора руководителей после первого скролла
     window.addEventListener('scroll', function() {
