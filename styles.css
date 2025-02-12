@@ -17,6 +17,7 @@ body {
     overflow: hidden; /* Скрываем прокрутку при загрузке */
 }
 
+/* Прелоадер */
 .preloader {
     position: fixed;
     top: 0;
@@ -29,7 +30,7 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    animation: fadeOut 2s ease-in-out forwards;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out; /* Добавили плавное скрытие */
 }
 
 .preloader-text {
@@ -51,22 +52,10 @@ body {
     height: 100%;
     width: 0;
     background-color: #ff6347;
-    animation: progressAnimation 2s linear forwards;
+    transition: width 2s linear; /* Используем transition для анимации */
 }
 
-@keyframes progressAnimation {
-    to {
-        width: 100%;
-    }
-}
-
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-        visibility: hidden;
-    }
-}
-
+/* Header */
 .header {
     text-align: center;
     padding: 30px;
@@ -75,54 +64,61 @@ body {
     background-color: transparent;
     color: white;
     position: relative;
-    animation: fadeIn 1s ease-in-out;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
     to {
         opacity: 1;
     }
 }
 
+/* Main Container */
 .main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    animation: slideIn 1s ease-in-out;
+    opacity: 0;
+    animation: slideIn 1s ease-in-out forwards;
 }
 
 @keyframes slideIn {
-    from {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
     to {
         transform: translateY(0);
         opacity: 1;
     }
+    from {
+        transform: translateY(-50px);
+    }
 }
 
 .description,
-.leader-container,
-.students-container,
+.leaders,
+.students,
 .footer {
     background-color: white;
     padding: 20px;
     margin: 10px 0;
     border-radius: 10px;
     width: 90%;
-    animation: slideIn 1s ease-in-out;
+    opacity: 0;
+    animation: slideIn 1s ease-in-out forwards; /* Добавили animation для всех секций */
 }
 
 /* Стили для карточек лидеров */
+.leaders {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .leader-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .leader-card {
@@ -172,6 +168,7 @@ body {
     margin: 10px;
     transition: transform 0.3s;
     cursor: pointer;
+    position: relative; /* Добавлено для позиционирования индикатора */
 }
 
 .student-card:hover {
@@ -188,6 +185,23 @@ body {
 
 .student-info {
     text-align: left;
+}
+
+.student-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    animation: fadeInIndicator 2s ease-in-out forwards 6s;
+}
+
+@keyframes fadeInIndicator {
+    to {
+        opacity: 1;
+    }
 }
 
 /* Стили для подвала */
@@ -218,14 +232,13 @@ body {
     max-width: 600px;
     display: flex;
     position: relative; /* Добавлено для позиционирования кнопки закрытия */
-    animation: modalFadeIn 0.5s ease-in-out;
+    opacity: 0;
+    transform: scale(0.9);
+    animation: modalFadeIn 0.3s ease-in-out forwards; /* Уменьшили длительность и добавили forwards */
+
 }
 
 @keyframes modalFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
     to {
         opacity: 1;
         transform: scale(1);
@@ -275,6 +288,28 @@ body {
     background-color: #ff4500;
 }
 
+/* Стили для индикатора руководителей */
+.leader-indicator {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    opacity: 1;
+}
+
+.leader-indicator p {
+    margin-right: 10px;
+}
+
+.leader-indicator i {
+    font-size: 20px;
+}
+
 /* Медиа-запросы для адаптивности */
 @media (max-width: 768px) {
     .leader-card {
@@ -319,8 +354,8 @@ body {
     }
 
     .description,
-    .leader-container,
-    .students-container,
+    .leaders,
+    .students,
     .footer {
         width: 95%; /* Занимают 95% ширины контейнера */
         padding: 15px; /* Уменьшаем отступ */
