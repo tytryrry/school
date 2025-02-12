@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const progressBar = document.querySelector('.progress');
     const leaderIndicator = document.querySelector('.leader-indicator');
     let leaderIndicatorShown = true;
+    const studentsIndicator = document.querySelector('.students-indicator'); // Объявление здесь
 
     // Закрытие модального окна при клике вне его
     window.addEventListener('click', function(event) {
@@ -38,9 +39,6 @@ document.addEventListener("DOMContentLoaded", function() {
             leaderIndicatorShown = false;
         }
     });
-});
-
-const studentsIndicator = document.querySelector('.students-indicator');
 
     // Функция для скрытия индикатора руководителей направлений
     function hideStudentsIndicator() {
@@ -49,7 +47,8 @@ const studentsIndicator = document.querySelector('.students-indicator');
     }
 
     // Задержка перед скрытием (5 секунд = 5000 миллисекунд)
-    setTimeout(hideStudentsIndicator, 8000);
+    setTimeout(hideStudentsIndicator, 9000); // setTimeout здесь
+});
 
 // Данные об учениках (вынес сюда для удобства редактирования и читаемости)
 const studentData = {
