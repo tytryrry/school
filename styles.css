@@ -185,16 +185,19 @@ body {
 
 .student-info {
     text-align: left;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .student-indicator {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
     font-size: 12px;
     color: rgba(0, 0, 0, 0.5);
     opacity: 1; /* Всегда видимая надпись */
+    margin-top: 10px; /* Добавляем отступ сверху */
+    text-align: center; /* Центрируем текст */
+    width: 100%; /* Занимает всю ширину контейнера */
 }
 
 /* Стили для подвала */
