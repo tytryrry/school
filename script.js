@@ -40,6 +40,17 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+const studentsIndicator = document.querySelector('.students-indicator');
+
+    // Функция для скрытия индикатора руководителей направлений
+    function hideStudentsIndicator() {
+        studentsIndicator.style.opacity = 0;
+        studentsIndicator.style.visibility = 'hidden';
+    }
+
+    // Задержка перед скрытием (5 секунд = 5000 миллисекунд)
+    setTimeout(hideStudentsIndicator, 8000);
+
 // Данные об учениках (вынес сюда для удобства редактирования и читаемости)
 const studentData = {
     student1: {
