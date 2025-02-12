@@ -1,366 +1,107 @@
-/* Общие стили */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById('student-menu');
+    const preloader = document.querySelector('.preloader');
+    const progressBar = document.querySelector('.progress');
+    const leaderIndicator = document.querySelector('.leader-indicator');
+    let leaderIndicatorShown = true;
 
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, rgba(255, 0, 0, 1), rgba(0, 0, 0, 0.8), rgba(0, 0, 255, 1));
-    color: #000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    overflow: hidden; /* Скрываем прокрутку при загрузке */
-}
+    // Закрытие модального окна при клике вне его
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeMenu();
+        }
+    });
 
-/* Прелоадер */
-.preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #ff0000; /* Чисто красный цвет */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    transition: opacity 0.5s ease-out, visibility 0.5s ease-out; /* Добавили плавное скрытие */
-}
+    // Убираем прелоадер после полной загрузки страницы
+    window.addEventListener('load', function() {
+        setTimeout(() => {
+            preloader.style.opacity = 0;
+            preloader.style.visibility = 'hidden';
+            document.body.style.overflow = 'auto'; // Включаем прокрутку
+        }, 8000); // Заставка на 8 секунд
+    });
 
-.preloader-text {
-    font-size: 24px;
-    color: white;
-    text-align: center;
-    margin-bottom: 20px;
-}
+    // Анимация полосы загрузки
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 1;
+        progressBar.style.width = progress + '%';
+        if (progress >= 100) {
+            clearInterval(interval);
+        }
+    }, 80); // 8 секунд для полной загрузки
 
-.progress-bar {
-    width: 80%;
-    height: 10px;
-    background-color: #fff;
-    border-radius: 5px;
-    overflow: hidden;
-}
+    // Скрытие индикатора руководителей после первого скролла
+    window.addEventListener('scroll', function() {
+        if (leaderIndicatorShown) {
+            leaderIndicator.style.opacity = 0;
+            leaderIndicatorShown = false;
+        }
+    });
+});
 
-.progress {
-    height: 100%;
-    width: 0;
-    background-color: #ff6347;
-    transition: width 8s linear; /* Используем transition для анимации */
-}
+// Данные об учениках (вынес сюда для удобства редактирования и читаемости)
+const studentData = {
+    student1: {
+        name: 'Валерия Кривошапова, 10 "А"',
+        details: 'В кружке волонтёрства ученики занимаются организацией благотворительных акций и мероприятий. Их цель — помощь тем, кто в ней нуждается, и развитие культуры добровольчества среди школьников.',
+        location: 'Кабинет 307',
+        photo: 'images/student1.jpg'
+    },
+    student2: {
+        name: 'Екатерина Гусакова и Степан Коржов, 10 "А"',
+        details: 'Участники кружка занимаются созданием школьных медиа: они пишут новости, делают фото- и видеорепортажи о важных событиях. Их задача — своевременно и интересно рассказывать о жизни школы, поддерживая информированность учеников и учителей.',
+        location: 'Кабинет 307',
+        photo: 'images/student2.jpg'
+    },
+    student3: {
+        name: 'Екатерина Худякова, 9 "В"',
+        details: ' Кружок "Первый помощник" - для доп. информации обращаться Екатерине.',
+        location: 'Кабинет 301',
+        photo: 'images/student3.jpg'
+    },
+    student4: {
+        name: 'Софья Гиммельфарб и Валерия Замула, 10 "А"',
+        details: 'Кружок занимается творческими проектами и культурными мероприятиями школы. Участники создают художественные работы, организуют выставки, спектакли и концерты, способствуя развитию культурной среды и вдохновляя учеников на творчество.',
+        location: 'Кабинет 307',
+        photo: 'images/student4.jpg'
+    },
+    student5: {
+        name: 'Белик Диана, 10 "А"',
+        details: 'Участники кружка пропагандируют здоровый образ жизни среди школьников. Они организуют спортивные соревнования, фитнес-акции и обучающие занятия по здоровью, мотивируя других к физической активности и заботе о себе.',
+        location: 'Кабинет 307',
+        photo: 'images/student5.jpg'
+    },
+    student6: {
+        name: 'Елизавета Момот, 9 "А"',
+        details: ' Этот кружок сосредоточен на поддержании и развитии патриотических ценностей. Участники организуют мероприятия, посвящённые исторической памяти, проводят акции и уроки, чтобы сохранить важные моменты истории и укрепить любовь к Родине среди учеников.',
+        location: 'Кабинет 307',
+        photo: 'images/student6.jpg'
+    }
+};
 
-/* Header */
-.header {
-    text-align: center;
-    padding: 30px;
-    width: 100%;
-    border-radius: 10px;
-    background-color: transparent;
-    color: white;
-    position: relative;
-    opacity: 0;
-    animation: fadeIn 1s ease-in-out forwards;
-}
+function openMenu(studentId) {
+    const modal = document.getElementById('student-menu');
+    const studentName = document.getElementById('student-name');
+    const studentDetails = document.getElementById('student-details');
+    const studentLocation = document.getElementById('student-location');
+    const modalPhoto = document.getElementById('modal-photo');
 
-@keyframes fadeIn {
-    to {
-        opacity: 1;
+    const student = studentData[studentId]; // Получаем данные об ученике по ID
+
+    if (student) {
+        studentName.innerText = student.name;
+        studentDetails.innerText = student.details;
+        studentLocation.innerText = student.location;
+        modalPhoto.src = student.photo;
+
+        modal.style.display = "flex";
+    } else {
+        console.error(`Student data not found for ID: ${studentId}`);
     }
 }
 
-/* Main Container */
-.main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    opacity: 0;
-    animation: slideIn 1s ease-in-out forwards;
-}
-
-@keyframes slideIn {
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    from {
-        transform: translateY(-50px);
-    }
-}
-
-.description,
-.leaders,
-.students,
-.footer {
-    background-color: white;
-    padding: 20px;
-    margin: 10px 0;
-    border-radius: 10px;
-    width: 90%;
-    opacity: 0;
-    animation: slideIn 1s ease-in-out forwards; /* Добавили animation для всех секций */
-}
-
-/* Стили для карточек лидеров */
-.leaders {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.leader-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.leader-card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 20px;
-    width: 100%; /* Занимает всю ширину контейнера */
-    max-width: 600px; /* Ограничение максимальной ширины */
-}
-
-.leader-photo-large {
-    width: 200px;
-    height: 270px;
-    object-fit: cover;
-    margin-right: 20px;
-    border-radius: 10px;
-}
-
-.leader-info {
-    flex: 1;
-    text-align: justify;
-    word-wrap: break-word; /* Авто-перенос слов */
-    word-break: break-word; /* Разрыв слов, если они не помещаются */
-    line-height: 1.6; /* Межстрочный интервал для улучшения читаемости */
-}
-
-/* Стили для карточек студентов */
-.students-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.student-card {
-    width: 350px;
-    height: 150px;
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    text-align: justify;
-    padding: 10px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    transition: transform 0.3s;
-    cursor: pointer;
-    position: relative; /* Добавлено для позиционирования индикатора */
-}
-
-.student-card:hover {
-    transform: scale(1.05);
-}
-
-.student-photo {
-    width: 80px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-right: 15px;
-}
-
-.student-info {
-    text-align: left;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.student-indicator {
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.5);
-    opacity: 1; /* Всегда видимая надпись */
-    margin-top: 10px; /* Добавляем отступ сверху */
-    text-align: center; /* Центрируем текст */
-    width: 100%; /* Занимает всю ширину контейнера */
-}
-
-/* Стили для подвала */
-.footer {
-    text-align: center;
-    font-size: 18px;
-}
-
-/* Стили для модального окна */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 600px;
-    display: flex;
-    position: relative; /* Добавлено для позиционирования кнопки закрытия */
-    opacity: 0;
-    transform: scale(0.9);
-    animation: modalFadeIn 0.3s ease-in-out forwards; /* Уменьшили длительность и добавили forwards */
-
-}
-
-@keyframes modalFadeIn {
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.close {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.modal-photo {
-    width: 160px;
-    height: 240px;
-    object-fit: cover;
-    margin-right: 20px;
-}
-
-.modal-info {
-    text-align: left;
-}
-
-/* Стили для кнопки новостей */
-.news-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #ff6347;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    font-size: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    z-index: 1000;
-}
-
-.news-button:hover {
-    background-color: #ff4500;
-}
-
-/* Стили для индикатора руководителей */
-.leader-indicator {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px 20px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    opacity: 0;
-    animation: fadeInIndicator 2s ease-in-out forwards 10s;
-}
-
-@keyframes fadeInIndicator {
-    to {
-        opacity: 1;
-    }
-}
-
-.leader-indicator p {
-    margin-right: 10px;
-}
-
-.leader-indicator i {
-    font-size: 20px;
-}
-
-/* Медиа-запросы для адаптивности */
-@media (max-width: 768px) {
-    .leader-card {
-        flex-direction: column; /* Изменяем направление на вертикальное */
-        align-items: center; /* Выравниваем элементы по центру */
-    }
-
-    .leader-photo-large {
-        margin-right: 0; /* Убираем отступ справа */
-        margin-bottom: 10px; /* Добавляем отступ снизу */
-    }
-
-    .student-card {
-        width: 100%; /* Занимает всю ширину контейнера */
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        height: auto; /* Автоматическая высота */
-    }
-
-    .student-photo {
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
-
-    .student-info {
-        text-align: center;
-    }
-
-    .modal-content {
-        flex-direction: column; /* Вертикальное размещение элементов */
-        align-items: center; /* Выравнивание по центру */
-    }
-
-    .modal-photo {
-        margin-right: 0; /* Убираем отступ справа */
-        margin-bottom: 10px; /* Добавляем отступ снизу */
-    }
-
-    .header {
-        padding: 20px; /* Уменьшаем отступ */
-    }
-
-    .description,
-    .leaders,
-    .students,
-    .footer {
-        width: 95%; /* Занимают 95% ширины контейнера */
-        padding: 15px; /* Уменьшаем отступ */
-    }
+function closeMenu() {
+    const modal = document.getElementById('student-menu');
+    modal.style.display = "none";
 }
