@@ -1,60 +1,109 @@
 document.addEventListener("DOMContentLoaded", function() {
     const modal = document.getElementById('student-menu');
     const preloader = document.querySelector('.preloader');
+    const progressBar = document.querySelector('.progress');
+    const leaderIndicator = document.querySelector('.leader-indicator');
+    let leaderIndicatorShown = true;
 
-    window.onclick = function(event) {
+    // Закрытие модального окна при клике вне его
+    window.addEventListener('click', function(event) {
         if (event.target === modal) {
             closeMenu();
         }
-    };
+    });
 
-    // Убираем прелоадер после загрузки контента
-    window.onload = function() {
-        preloader.style.display = 'none';
+    // Убираем прелоадер после полной загрузки страницы
+    window.addEventListener('load', function() {
+        preloader.style.opacity = 0;
+        preloader.style.visibility = 'hidden';
         document.body.style.overflow = 'auto'; // Включаем прокрутку
-    };
+    });
+
+    // Анимация полосы загрузки
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 1;
+        progressBar.style.width = progress + '%';
+        if (progress >= 100) {
+            clearInterval(interval);
+        }
+    }, 60); // 6 секунд для полной загрузки
+
+    // Скрытие прелоадера через 6 секунд
+    setTimeout(() => {
+        preloader.style.opacity = 0;
+        preloader.style.visibility = 'hidden';
+        document.body.style.overflow = 'auto'; // Включаем прокрутку
+    }, 6000);
+
+    // Скрытие индикатора руководителей после первого скролла
+    window.addEventListener('scroll', function() {
+        if (leaderIndicatorShown) {
+            leaderIndicator.style.opacity = 0;
+            leaderIndicatorShown = false;
+        }
+    });
 });
 
-function openMenu(student) {
+// Данные об учениках (вынес сюда для удобства редактирования и читаемости)
+const studentData = {
+    student1: {
+        name: 'Валерия Кривошапова, 10 "А"',
+        details: 'В кружке волонтёрства ученики занимаются организацией благотворительных акций и мероприятий. Их цель — помощь тем, кто в ней нуждается, и развитие культуры добровольчества среди школьников.',
+        location: 'Кабинет 307',
+        photo: 'images/student1.jpg'
+    },
+    student2: {
+        name: 'Екатерина Гусакова и Степан Коржов, 10 "А"',
+        details: 'Участники кружка занимаются созданием школьных медиа: они пишут новости, делают фото- и видеорепортажи о важных событиях. Их задача — своевременно и интересно рассказывать о жизни школы, поддерживая информированность учеников и учителей.',
+        location: 'Кабинет 307',
+        photo: 'images/student2.jpg'
+    },
+    student3: {
+        name: 'Екатерина Худякова, 9 "В"',
+        details: ' Кружок "Первый помощник" - для доп. информации обращаться Екатерине.',
+        location: 'Кабинет 301',
+        photo: 'images/student3.jpg'
+    },
+    student4: {
+        name: 'Софья Гиммельфарб и Валерия Замула, 10 "А"',
+        details: 'Кружок занимается творческими проектами и культурными мероприятиями школы. Участники создают художественные работы, организуют выставки, спектакли и концерты, способствуя развитию культурной среды и вдохновляя учеников на творчество.',
+        location: 'Кабинет 307',
+        photo: 'images/student4.jpg'
+    },
+    student5: {
+        name: 'Белик Диана, 10 "А"',
+        details: 'Участники кружка пропагандируют здоровый образ жизни среди школьников. Они организуют спортивные соревнования, фитнес-акции и обучающие занятия по здоровью, мотивируя других к физической активности и заботе о себе.',
+        location: 'Кабинет 307',
+        photo: 'images/student5.jpg'
+    },
+    student6: {
+        name: 'Елизавета Момот, 9 "А"',
+        details: ' Этот кружок сосредоточен на поддержании и развитии патриотических ценностей. Участники организуют мероприятия, посвящённые исторической памяти, проводят акции и уроки, чтобы сохранить важные моменты истории и укрепить любовь к Родине среди учеников.',
+        location: 'Кабинет 307',
+        photo: 'images/student6.jpg'
+    }
+};
+
+function openMenu(studentId) {
     const modal = document.getElementById('student-menu');
     const studentName = document.getElementById('student-name');
     const studentDetails = document.getElementById('student-details');
     const studentLocation = document.getElementById('student-location');
     const modalPhoto = document.getElementById('modal-photo');
 
-    if (student === 'student1') {
-        studentName.innerText = 'Валерия Кривошапова, 10 "А"';
-        studentDetails.innerText = 'В кружке волонтёрства ученики занимаются организацией благотворительных акций и мероприятий. Их цель — помощь тем, кто в ней нуждается, и развитие культуры добровольчества среди школьников.';
-        studentLocation.innerText = 'Кабинет 307';
-        modalPhoto.src = 'images/student1.jpg';
-    } else if (student === 'student2') {
-        studentName.innerText = 'Екатерина Гусакова и Степан Коржов, 10 "А"';
-        studentDetails.innerText = 'Участники кружка занимаются созданием школьных медиа: они пишут новости, делают фото- и видеорепортажи о важных событиях. Их задача — своевременно и интересно рассказывать о жизни школы, поддерживая информированность учеников и учителей.';
-        studentLocation.innerText = 'Кабинет 307';
-        modalPhoto.src = 'images/student2.jpg';
-    } else if (student === 'student3') {
-        studentName.innerText = 'Екатерина Худякова, 9 "В"';
-        studentDetails.innerText = ' Кружок "Первый помощник" - для доп. информации обращаться Екатерине.';
-        studentLocation.innerText = 'Кабинет 301';
-        modalPhoto.src = 'images/student3.jpg';
-    } else if (student === 'student4') {
-        studentName.innerText = 'Софья Гиммельфарб и Валерия Замула, 10 "А"';
-        studentDetails.innerText = 'Кружок занимается творческими проектами и культурными мероприятиями школы. Участники создают художественные работы, организуют выставки, спектакли и концерты, способствуя развитию культурной среды и вдохновляя учеников на творчество.';
-        studentLocation.innerText = 'Кабинет 307';
-        modalPhoto.src = 'images/student4.jpg';
-    } else if (student === 'student5') {
-        studentName.innerText = 'Белик Диана, 10 "А"';
-        studentDetails.innerText = 'Участники кружка пропагандируют здоровый образ жизни среди школьников. Они организуют спортивные соревнования, фитнес-акции и обучающие занятия по здоровью, мотивируя других к физической активности и заботе о себе.';
-        studentLocation.innerText = 'Кабинет 307';
-        modalPhoto.src = 'images/student5.jpg';
-    } else if (student === 'student6') {
-        studentName.innerText = 'Елизавета Момот, 9 "А"';
-        studentDetails.innerText = ' Этот кружок сосредоточен на поддержании и развитии патриотических ценностей. Участники организуют мероприятия, посвящённые исторической памяти, проводят акции и уроки, чтобы сохранить важные моменты истории и укрепить любовь к Родине среди учеников.';
-        studentLocation.innerText = 'Кабинет 307';
-        modalPhoto.src = 'images/student6.jpg';
-    }
+    const student = studentData[studentId]; // Получаем данные об ученике по ID
 
-    modal.style.display = "flex";
+    if (student) {
+        studentName.innerText = student.name;
+        studentDetails.innerText = student.details;
+        studentLocation.innerText = student.location;
+        modalPhoto.src = student.photo;
+
+        modal.style.display = "flex";
+    } else {
+        console.error(`Student data not found for ID: ${studentId}`);
+    }
 }
 
 function closeMenu() {
