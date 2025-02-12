@@ -24,7 +24,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(255, 0, 0, 1), rgba(0, 0, 0, 0.8), rgba(0, 0, 255, 1));
+    background-color: #ff0000; /* Чисто красный цвет */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -52,7 +52,7 @@ body {
     height: 100%;
     width: 0;
     background-color: #ff6347;
-    transition: width 2s linear; /* Используем transition для анимации */
+    transition: width 8s linear; /* Используем transition для анимации */
 }
 
 /* Header */
@@ -194,14 +194,7 @@ body {
     transform: translateX(-50%);
     font-size: 12px;
     color: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    animation: fadeInIndicator 2s ease-in-out forwards 6s;
-}
-
-@keyframes fadeInIndicator {
-    to {
-        opacity: 1;
-    }
+    opacity: 1; /* Всегда видимая надпись */
 }
 
 /* Стили для подвала */
@@ -299,7 +292,14 @@ body {
     border-radius: 20px;
     display: flex;
     align-items: center;
-    opacity: 1;
+    opacity: 0;
+    animation: fadeInIndicator 2s ease-in-out forwards 10s;
+}
+
+@keyframes fadeInIndicator {
+    to {
+        opacity: 1;
+    }
 }
 
 .leader-indicator p {
