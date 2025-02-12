@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
             preloader.style.opacity = 0;
             preloader.style.visibility = 'hidden';
             document.body.style.overflow = 'auto'; // Включаем прокрутку
-        }, 8000); // Заставка на 8 секунд
+        }, 4000); // Заставка на 8 секунд
     });
 
     // Анимация полосы загрузки
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (progress >= 100) {
             clearInterval(interval);
         }
-    }, 80); // 8 секунд для полной загрузки
+    }, 40); // 8 секунд для полной загрузки
 
     // Скрытие индикатора руководителей после первого скролла
     window.addEventListener('scroll', function() {
